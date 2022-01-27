@@ -2,12 +2,12 @@
 
 I have built a CLI to handle the uses of our LIFE API, allowing users to do the following via the methods:
 
-1. [`get_npi_list()`]() allows users to retrieve a list of all NPI's that are in a NPI List
-2. [`get_all_npi_lists()`]() allows users to get a list of all NPI lists associated with an account
-3. [`create_npi_list()`]() allows users to create a new NPI list and add NPIs to the new list
-4. [`replace_npi_list()`]() allows users to replace all NPI's in one list
-5. [`add_npi_to_list()`]() allows users to add NPIs to an existing NPI list
-6. [`delete_npi_from_list()`]() allows users to delete NPIs from one list
+1. [`get_npi_list()`](https://github.com/mrpbennett/npi_api/blob/94764b6cf3e19c20e2d58db7fb5b7852927ded79/npi_class.py#L46) allows users to retrieve a list of all NPI's that are in a NPI List
+2. [`get_all_npi_lists()`](https://github.com/mrpbennett/npi_api/blob/94764b6cf3e19c20e2d58db7fb5b7852927ded79/npi_class.py#L75) allows users to get a list of all NPI lists associated with an account
+3. [`create_npi_list()`](https://github.com/mrpbennett/npi_api/blob/94764b6cf3e19c20e2d58db7fb5b7852927ded79/npi_class.py#L108) allows users to create a new NPI list and add NPIs to the new list
+4. [`replace_npi_list()`](https://github.com/mrpbennett/npi_api/blob/94764b6cf3e19c20e2d58db7fb5b7852927ded79/npi_class.py#L149) allows users to replace all NPI's in one list
+5. [`add_npi_to_list()`](https://github.com/mrpbennett/npi_api/blob/94764b6cf3e19c20e2d58db7fb5b7852927ded79/npi_class.py#L168) allows users to add NPIs to an existing NPI list
+6. [`delete_npi_from_list()`](https://github.com/mrpbennett/npi_api/blob/94764b6cf3e19c20e2d58db7fb5b7852927ded79/npi_class.py#L188) allows users to delete NPIs from one list
 
 There is also a `@staticmethod` that prevents from users overloading the API when it comes to creating multiple lists.
 
