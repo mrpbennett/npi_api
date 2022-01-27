@@ -1,0 +1,10 @@
+CompasID,Client_ID,CMI_PlacementID,Client_PlacementID,ME_ID,Placement_Description,Supplier,NPI_ID,First_Name,Middle_Name,Last_Name,Address_1,Address_2,City,State_Code,Postal_Code,Country,Email_Address,Specialty,Brand_Name,Vehicle_Name,TargetListID,Campaign_Name,Segment_1,Segment_2,Custom_3,Custom_4,Custom_5,Custom_6,Custom_7,Custom_8,Custom_9,Custom_10
+1838314, ,162539, , ,,,101010101,BOB, ,AHN,11180 WARNER AVE,SUITE 365,FOUNTAIN VALLEY,CA,92708-7501, , , ,Something HCP,,paul_test_1, ,Both, , , , , , , , , 
+1093580, ,162539, , ,,,101010101,BOB, ,FLEMING,3000 COLISEUM DR,SUITE 104,HAMPTON,VA,23666-5963, , , ,Something HCP,,paul_test_1, ,Both, , , , , , , , , 
+2431643, ,162539, , ,,,101010101,BOB, ,TAHA,6009 BOULEVARD EAST,UNIT E-1,WEST NEW YORK,NJ,07093-3740, , , ,Something HCP,,paul_test_1, ,Both, , , , , , , , , 
+1947780, ,162539, , ,,,101010101,BOB, ,ALOBA,7848 GATEWAY BLVD E, ,EL PASO,TX,79915-1815, , , ,Something HCP,,paul_test_1, ,Both, , , , , , , , , 
+1736657, ,162539, , ,,,101010101,BOB, ,VOGELZANG,3730 S EASTERN AVE,CHAIR AND MEDICAL DIRECTOR,LAS VEGAS,NV,89169-3321, , , ,Something HCP,,paul_test_1, ,Both, , , , , , , , , 
+1043951, ,162539, , ,,,101010101,BOB, ,RIZVI,4201 MEDICAL CENTER DR,SUITE 180,MCKINNEY,TX,75069-1766, , , ,Something HCP,,paul_test_1, ,Both, , , , , , , , , 
+1207938, ,162539, , ,,,101010101,BOB, ,VALILIS,7848 GATEWAY BLVD E, ,EL PASO,TX,79915-1815, , , ,Something HCP,,paul_test_1, ,Both, , , , , , , , , 
+2181999, ,162539, , ,,,101010101,BOB, ,ALBINO,10 CALLE CASIA, ,SAN JUAN,PR,00921-3200, , , ,Something HCP,,paul_test_1, ,Both, , , , , , , , , 
+1056822, ,162539, , ,,,101010101,BOB, ,SALGIA,2799 W GRAND BLVD,GASTRO K7,DETROIT,MI,48202-2608, , , ,Something HCP,,paul_test_1, ,Both, , , , , , , , , 

@@ -138,7 +138,7 @@ except requests.exceptions.HTTPError as err:
 
 ''' ADD NPI TEST '''
 
-# df = pd.read_csv('data/add_npi_to_lists/npi_test.csv')[['TargetListID', 'NPI_ID']]
+# df = pd.read_csv('data/add_npi_to_lists/add_npi_test.csv')[['TargetListID', 'NPI_ID']]
 # df = df.dropna()
 #
 # for target in df['TargetListID'].unique():
@@ -168,7 +168,7 @@ except requests.exceptions.HTTPError as err:
 
 ''' DELETE NPI TEST '''
 
-# df = pd.read_csv('data/add_npi_to_lists/npi_test.csv')[['TargetListID', 'NPI_ID']]
+# df = pd.read_csv('data/add_npi_to_lists/delete_npi_test.csv')[['TargetListID', 'NPI_ID']]
 # df = df.dropna()
 #
 # for target in df['TargetListID'].unique():

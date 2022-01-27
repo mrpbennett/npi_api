@@ -167,7 +167,7 @@ class NPIListApi:
         conn = self.establish_connection()
 
         # ingest data from ./data/create_npi_lists - storing only cols TargetListID & NPI_ID
-        df = pd.read_csv('data/replace_npi_lists/npi_test.csv')[['TargetListID', 'NPI_ID']]
+        df = pd.read_csv('data/replace_npi_lists/replace_npi_test.csv')[['TargetListID', 'NPI_ID']]
         df = df.dropna()
 
         # here we loop through original df to get unique IDs and NPIs then sort into separate dicts
@@ -216,7 +216,7 @@ class NPIListApi:
 
         conn = self.establish_connection()
 
-        df = pd.read_csv('data/add_npi_to_lists/npi_test.csv')[['TargetListID', 'NPI_ID']]
+        df = pd.read_csv('data/add_npi_to_lists/add_npi_test.csv')[['TargetListID', 'NPI_ID']]
         df = df.dropna()
 
         for target in df['TargetListID'].unique():
@@ -262,7 +262,7 @@ class NPIListApi:
 
         conn = self.establish_connection()
 
-        df = pd.read_csv('data/add_npi_to_lists/npi_test.csv')[['TargetListID', 'NPI_ID']]
+        df = pd.read_csv('data/add_npi_to_lists/delete_npi_test.csv')[['TargetListID', 'NPI_ID']]
         df = df.dropna()
 
         for target in df['TargetListID'].unique():
