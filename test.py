@@ -61,17 +61,17 @@ for target in df['TargetListID'].unique():
     # print(f'new_lists holds: \n {json.dumps(new_lists, indent=2)}')
 
 
-print(f'We have detected {len(new_lists)} list/s to be created this could take {len(new_lists)} mins or more to upload \n')
-
-try:
-    for i, v in enumerate(new_lists):
-        r = requests.post('https://httpbin.org/post', json=json.dumps(v))
-        r.raise_for_status()
-
-        if r.status_code == requests.codes.ok:
-            progress_bar()
-            print(f'List #{i + 1} uploaded 👍')
-
-except requests.exceptions.HTTPError as err:
-    raise SystemExit(err)
+# print(f'We have detected {len(new_lists)} list/s to be created this could take {len(new_lists)} mins or more to upload \n')
+#
+# try:
+#     for i, v in enumerate(new_lists):
+#         r = requests.post('https://httpbin.org/post', json=json.dumps(v))
+#         r.raise_for_status()
+#
+#         if r.status_code == requests.codes.ok:
+#             progress_bar()
+#             print(f'List #{i + 1} uploaded 👍')
+#
+# except requests.exceptions.HTTPError as err:
+#     raise SystemExit(err)
 
