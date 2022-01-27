@@ -1,3 +1,7 @@
+'''
+Create by Paul Bennett : 2022
+'''
+
 from authlib.integrations.requests_client import OAuth2Session
 from simple_chalk import chalk
 from progress.bar import Bar
