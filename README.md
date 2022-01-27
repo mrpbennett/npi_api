@@ -20,6 +20,12 @@ def progress_bar():
             bar.next()
 ```
 
+The output from `progress_bar()` should look as follows:
+
+<img width="676" alt="Screenshot 2022-01-27 at 13 52 47" src="https://user-images.githubusercontent.com/1844080/151379325-b248e8a7-9e34-4d7f-8c3a-f4d10dc14345.png">
+
+
+
 Each method sits in a class called `NPIListApi` this holds the brains of the application.
 
 The CLI is powered by `PyInquirer` and `simple_chalk` to make it look user-friendly.
@@ -40,3 +46,4 @@ def establish_connection(self):
 ```
 
 This uses the awesome library called [Authlib](https://docs.authlib.org/en/latest/)
+
