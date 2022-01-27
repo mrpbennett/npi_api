@@ -58,18 +58,13 @@ if len_of_account_id and len_of_password >= 6:
         get_npi_list_questions = [
             {
                 'type': 'input',
-                'name': 'file_loc',
-                'message': 'Please provide the FILE LOCATION you wish to save the list too.'
-            },
-            {
-                'type': 'input',
                 'name': 'list_id',
                 'message': 'Please provide the LIST ID you wish to generate'
             }
         ]
 
         get_npi_list_answers = prompt(get_npi_list_questions)
-        n.get_npi_list(get_npi_list_answers.get('file_loc'), get_npi_list_answers.get('list_id'))
+        n.get_npi_list(get_npi_list_answers.get('list_id'))
 
     if user_task_answers.get('theme') == 'GET ALL NPIs for account':
 
@@ -98,11 +93,41 @@ if len_of_account_id and len_of_password >= 6:
         n.create_npi_list(get_create_npi_answers.get('account_id'))
 
     if user_task_answers.get('theme') == "REPLACE NPIs within a list":
-        pass
+
+        get_replace_npi_list_questions = [
+            {
+                'type': 'input',
+                'name': 'list_id',
+                'message': 'Please provide the LIST ID of the list you wish to REPLACE NPIs on'
+            }
+        ]
+
+        get_replace_npi_list_answers = prompt(get_replace_npi_list_questions)
+        n.get_npi_list(get_replace_npi_list_answers.get('list_id'))
 
     if user_task_answers.get('theme') == "ADD NPIs to a list":
-        pass
+
+        get_add_npi_list_questions = [
+            {
+                'type': 'input',
+                'name': 'list_id',
+                'message': 'Please provide the LIST ID you wish to ADD NPIs too'
+            }
+        ]
+
+        get_add_npi_list_answers = prompt(get_add_npi_list_questions)
+        n.get_npi_list(get_add_npi_list_answers.get('list_id'))
 
     if user_task_answers.get('theme') == "DELETE NPIs from a list":
-        pass
+
+        get_delete_npi_list_questions = [
+            {
+                'type': 'input',
+                'name': 'list_id',
+                'message': 'Please provide the LIST ID you wish to DELETE NPIs from'
+            }
+        ]
+
+        get_delete_npi_list_answers = prompt(get_delete_npi_list_questions)
+        n.get_npi_list(get_delete_npi_list_answers.get('list_id'))
 

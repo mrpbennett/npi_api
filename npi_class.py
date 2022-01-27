@@ -43,7 +43,7 @@ class NPIListApi:
     example: class_instance.export_npi_list_to_csv("./data", 1234)
     """
 
-    def get_npi_list(self, file_loc, list_id):
+    def get_npi_list(self, list_id):
 
         conn = self.establish_connection()
 
@@ -60,8 +60,8 @@ class NPIListApi:
                 df = pd.read_json(data_str)
 
                 # creates a csv file from dataframe and stores it locally
-                print(chalk.green(f'SUCCESS! NPI List ID {list_id} has been exported to {file_loc}/'))
-                return df.to_csv(f'{file_loc}/npi_list_{list_id}.csv', index=False)
+                print(chalk.green(f'SUCCESS! NPI List ID {list_id} has been exported to ./data/get_npi_lists/'))
+                return df.to_csv(f'./data/get_npi_lists/npi_list_{list_id}.csv', index=False)
 
         except requests.exceptions.HTTPError as err:
             raise SystemExit(err)
@@ -111,8 +111,8 @@ class NPIListApi:
 
         conn = self.establish_connection()
 
-        # ingest data from ./data/test - storing only cols TargetListID & NPI_ID
-        df = pd.read_csv('./data/test/npi_test.csv')[['TargetListID', 'NPI_ID']]
+        # ingest data from ./data/create_npi_lists - storing only cols TargetListID & NPI_ID
+        df = pd.read_csv('data/create_npi_lists/npi_test.csv')[['TargetListID', 'NPI_ID']]
         df = df.dropna()
 
         # here we loop through original df to get unique IDs and NPIs then sort into separate dicts
@@ -120,12 +120,17 @@ class NPIListApi:
             new_list = df[df['TargetListID'] == target].reset_index(drop=True)
             new_list = new_list['NPI_ID'].apply(lambda x: str(int(x))).to_list()
 
-            # final_list is the dict we pass into new_lists so we can send this to our api
-            final_list = dict(name=target, npis=new_list)
-            new_lists.append(final_list)
+            # final_list is the dict we pass into new_lists so we can send this to our api. We also have a condition
+            # that needs to be met no list can be > 1,000,000
+            if len(new_list) > 1000000:
+                print(chalk.red('❌ One of the lists is above our MAX of 1,000,000 NPIs, please reduce the list!'))
+                break
+            else:
+                final_list = dict(name=target, npis=new_list)
+                new_lists.append(final_list)
 
-        print(f'We have detected {len(new_lists)} lists to be created this could take {len(new_lists)} '
-              f'min/s or more to upload \n')
+        print(f'We have detected {len(new_lists)} list/s to be created this could take {len(new_lists) * 301 / 60} '
+              f'mins or more to upload \n')
 
         try:
             # loop through new_lists and send list to npis
@@ -144,18 +149,48 @@ class NPIListApi:
     """
     Replace NPIs within a list. User would need to supply the LIST ID of the list where they wish to replace NPIs 
     example: class_instance.replace_npi_list(123456)
+    
+    We need to send JSON to client in the format of:
+    
+    {
+        "npis" [
+            "123456",
+            "123456",
+            "122345",
+            ...
+        ]
+    }
     """
 
     def replace_npi_list(self, list_id):
 
         conn = self.establish_connection()
 
+        # ingest data from ./data/create_npi_lists - storing only cols TargetListID & NPI_ID
+        df = pd.read_csv('data/replace_npi_lists/npi_test.csv')[['TargetListID', 'NPI_ID']]
+        df = df.dropna()
+
+        # here we loop through original df to get unique IDs and NPIs then sort into separate dicts
+        for target in df['TargetListID'].unique():
+            new_list = df[df['TargetListID'] == target].reset_index(drop=True)
+            new_list = new_list['NPI_ID'].apply(lambda x: str(int(x))).to_list()
+
+            # final_list is the dict we pass into new_lists so we can send this to our api. We also have a condition
+            # that needs to be met no list can be > 1,000,000
+            if len(new_list) > 1000000:
+                print(chalk.red('❌ One of the lists is above our MAX of 1,000,000 NPIs, please reduce the list!'))
+                break
+            else:
+                final_list = dict(npis=new_list)
+
         try:
-            r = conn.put(f"https://lifeapi.pulsepoint.com/RestApi/v1/npi/npi-list/{list_id}")
+            r = conn.put(f'https://lifeapi.pulsepoint.com/RestApi/v1/npi/npi-list/{list_id}',
+                              json=final_list, verify=False)
             r.raise_for_status()
 
             if r.status_code == requests.codes.ok:
-                pass
+                self.progress_bar()
+                print(f'NPIs have been REPLACED for {list_id} 👍')
 
         except requests.exceptions.HTTPError as err:
             raise SystemExit(err)
@@ -163,18 +198,44 @@ class NPIListApi:
     """
     Add NPIs to a list within LIFE. User would need to supply the LIST ID of the list where they wish to ADD NPIs too
     example: class_instance.add_npi_to_list(123456)
+    
+    We need to send JSON to client in the format of:
+    
+    {
+        "operation": "add",
+        "npis" [
+            "123456",
+            "123456",
+            "122345",
+            ...
+        ]
+    }
     """
 
     def add_npi_to_list(self, list_id):
 
         conn = self.establish_connection()
 
+        df = pd.read_csv('data/add_npi_to_lists/npi_test.csv')[['TargetListID', 'NPI_ID']]
+        df = df.dropna()
+
+        for target in df['TargetListID'].unique():
+            new_list = df[df['TargetListID'] == target].reset_index(drop=True)
+            new_list = new_list['NPI_ID'].apply(lambda x: str(int(x))).to_list()
+
+            if len(new_list) > 1000000:
+                print(chalk.red('❌ One of the lists is above our MAX of 1,000,000 NPIs, please reduce the list!'))
+                break
+            else:
+                final_list = dict(operation="add", npis=new_list)
+
         try:
-            r = conn.patch(f"https://lifeapi.pulsepoint.com/RestApi/v1/npi/npi-list/{list_id}")
+            r = conn.patch(f"https://lifeapi.pulsepoint.com/RestApi/v1/npi/npi-list/{list_id}", json=final_list)
             r.raise_for_status()
 
             if r.status_code == requests.codes.ok:
-                pass
+                self.progress_bar()
+                print(f'Your NPIs have been ADDED to {list_id} 👍')
 
         except requests.exceptions.HTTPError as err:
             raise SystemExit(err)
@@ -183,18 +244,44 @@ class NPIListApi:
     DELETE NPIs from a list within LIFE. User would need to supply the LIST ID of the list where they wish to DELETE 
     NPIs from. 
     example: class_instance.delete_npi_from_list(123456)
+    
+    We need to send JSON to client in the format of:
+    
+    {
+        "operation": "remove",
+        "npis" [
+            "123456",
+            "123456",
+            "122345",
+            ...
+        ]
+    }
     """
 
     def delete_npi_from_list(self, list_id):
 
         conn = self.establish_connection()
 
+        df = pd.read_csv('data/add_npi_to_lists/npi_test.csv')[['TargetListID', 'NPI_ID']]
+        df = df.dropna()
+
+        for target in df['TargetListID'].unique():
+            new_list = df[df['TargetListID'] == target].reset_index(drop=True)
+            new_list = new_list['NPI_ID'].apply(lambda x: str(int(x))).to_list()
+
+            if len(new_list) > 1000000:
+                print(chalk.red('❌ One of the lists is above our MAX of 1,000,000 NPIs, please reduce the list!'))
+                break
+            else:
+                final_list = dict(operation="remove", npis=new_list)
+
         try:
-            r = conn.patch(f"https://lifeapi.pulsepoint.com/RestApi/v1/npi/npi-list/{list_id}")
+            r = conn.patch(f"https://lifeapi.pulsepoint.com/RestApi/v1/npi/npi-list/{list_id}", json=final_list)
             r.raise_for_status()
 
             if r.status_code == requests.codes.ok:
-                pass
+                self.progress_bar()
+                print(f'Your NPIs have been REMOVED from {list_id} 👍')
 
         except requests.exceptions.HTTPError as err:
             raise SystemExit(err)
@@ -203,7 +290,7 @@ class NPIListApi:
 
     @staticmethod
     def progress_bar():
-        with Bar(f"Uploading!", fill="🟪", max=61, suffix='%(percent)d%%') as bar:
-            for _ in range(61):
+        with Bar(f"Please wait:", fill="🟪", max=301, suffix='%(percent)d%%') as bar:
+            for _ in range(301):
                 time.sleep(1)
                 bar.next()

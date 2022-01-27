@@ -14,7 +14,7 @@ There is also a `@staticmethod` that prevents from users overloading the API whe
 ```python
 @staticmethod
 def progress_bar():
-    with Bar(f"Uploading!", fill="🟪", max=61, suffix='%(percent)d%%') as bar:
+    with Bar(f"Please wait", fill="🟪", max=61, suffix='%(percent)d%%') as bar:
         for _ in range(61):
             time.sleep(1)
             bar.next()
